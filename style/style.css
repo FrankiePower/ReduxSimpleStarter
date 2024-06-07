@@ -3,6 +3,13 @@
   text-align: center;
 }
 
+.search-br {
+  border: 1px solid black;
+  height: 40px;
+  border-radius: 15px;
+  padding: 10px;
+}
+
 .search-bar input {
   width: 75%;
 }

@@ -1,5 +1,7 @@
 import React from "react";
 
+// video detail is a functional component. has no need for state.
+
 const VideoDetail = ({ video }) => {
   if (!video) {
     return <div>Loading...</div>;

@@ -1,3 +1,4 @@
+import _ from "lodash";
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import youtubeApiSearch from "youtube-api-search";
@@ -7,28 +8,35 @@ import VideoDetail from "./components/video_details";
 
 const API_KEY = "AIzaSyBYgFwAznOmzrYg104GIouB50eeZWdvDAs";
 
-// Create a new component. This component should produce some HTML
-
+// Class component are used when we want to have a concept of state.
 class App extends Component {
   constructor(props) {
     super(props);
 
+    // constructor is initialized once an instance of app is created.
     this.state = {
       videos: [],
       selectedVideo: null,
     };
 
-    youtubeApiSearch(
-      { key: API_KEY, term: "How to make a Shawarma" },
-      (videos) => {
-        this.setState({ videos: videos, selectedVideo: videos[0] });
-      }
-    );
+    this.videoSearch("How to make lasagna");
   }
+
+  // video search function with an argument of term.
+  videoSearch(term) {
+    youtubeApiSearch({ key: API_KEY, term: term }, (videos) => {
+      this.setState({ videos: videos, selectedVideo: videos[0] });
+    });
+  }
+
   render() {
+    const videoSearch = _.debounce((term) => {
+      this.videoSearch(term);
+    }, 300);
+
     return (
       <div>
-        <Searchbar />
+        <Searchbar onSearchTermChange={(term) => this.videoSearch(term)} />
         <VideoDetail video={this.state.selectedVideo} />
         <VideoList
           onVideoSelect={(selectedVideo) => this.setState({ selectedVideo })}

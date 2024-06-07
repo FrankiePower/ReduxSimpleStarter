@@ -1,5 +1,6 @@
 import React from "react";
 
+//Functional Component
 const VideoListItem = ({ video, onVideoSelect }) => {
   const imageUrl = video.snippet.thumbnails.default.url;
   return (
